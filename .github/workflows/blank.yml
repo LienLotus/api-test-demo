@@ -20,15 +20,20 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
+      - name: Install Newman and HTML Extra Reporter
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
       - name: Run Postman Collection
         run: |
           newman run DemoAPIAutomation.postman_collection.json \
-            --reporters cli,junit \
-            --reporter-junit-export results/junit-report.xml
+           --environment Demo Env.postman_environment.json \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export results/report.html
 
-      - name: Upload Test Results
-        if: always()
+      - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: postman-test-results
-          path: results
+          name: postman-html-report
+          path: results/report.html

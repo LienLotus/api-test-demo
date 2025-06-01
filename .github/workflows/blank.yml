@@ -28,7 +28,7 @@ jobs:
       - name: Run Postman Collection
         run: |
           newman run DemoAPIAutomation.postman_collection.json \
-           --environment Demo Env.postman_environment.json \
+           --environment DemoEnv.postman_environment.json \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export results/report.html
 

@@ -28,7 +28,8 @@ jobs:
       - name: Run Postman Collection
         run: |
           newman run DemoAPIAutomation.postman_collection.json \
-           --environment DemoEnv.postman_environment.json \
+            --environment DemoEnv.postman_environment.json \
+            --env-var api_key=${{ secrets.POSTMAN_API_KEY }} \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export results/report.html
 

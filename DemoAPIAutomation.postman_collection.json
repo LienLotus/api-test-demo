@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "55a8d346-3f58-4efe-81b8-7a56e248b618",
+		"name": "DemoAPIAutomation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16748957",
+		"_collection_link": "https://test66-1321.postman.co/workspace/Team-Workspace~7c533557-694a-4eed-8d80-05b57416a180/collection/16748957-55a8d346-3f58-4efe-81b8-7a56e248b618?action=share&source=collection_link&creator=16748957"
+	},
+	"item": [
+		{
+			"name": "GetUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test for response time",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"// Test for content type",
+							"pm.test(\"Content type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"// Test for the presence of page number",
+							"pm.test(\"Response contains the 'page' number\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.page).to.exist;",
+							"    pm.expect(jsonData.page).to.be.a('number');",
+							"});",
+							"",
+							"// Test for the presence of 'data' array",
+							"pm.test(\"Response contains the 'data' array\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.be.an('array');",
+							"    pm.expect(jsonData.data).to.have.lengthOf.at.least(1);",
+							"});",
+							"",
+							"// Test for the presence of 'support' object",
+							"pm.test(\"Response contains the 'support' object\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.support).to.be.an('object');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users?page=2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for status code",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// Test for response time",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Test for response body properties",
+							"pm.test(\"Response has the required properties\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData).to.have.property('job');",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData).to.have.property('createdAt');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "reqres-free-v1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"QA\",\n    \"job\": \"Test Name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
